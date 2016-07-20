@@ -12,10 +12,21 @@ using launchctl.
 Here's a series of commands that would set everything up for you
 
 - Download from https://github.com/pastjean/osx-sync-env/releases and set in your path
-- Then:
+```
+curl https://github.com/pastjean/osx-sync-env/releases/download/latest/osx-sync-env.tar.gz | tar xzf
+```
+
+- Move the binary to your favorite bin dir
+- Then
 ```
 osx-sync-env install
 osx-sync-env sync
+```
+
+or for go fu's
+
+```bash
+go get -u github.com/pastjean/osx-sync-env
 ```
 
 ## Usage
