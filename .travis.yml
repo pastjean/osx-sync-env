@@ -9,11 +9,10 @@ matrix:
   - go: tip
 
 env:
-  - GIMME_OS=darwin GIMME_ARCH=amd64
 
 script:
 - go test -v ./...
-- go build
+- GOOS=darwin GOARCH=amd64 go build
 
 deploy:
   provider: releases
