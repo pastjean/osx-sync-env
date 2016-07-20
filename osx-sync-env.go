@@ -120,17 +120,17 @@ func createPlistFile() error {
 	programPath, _ := filepath.Abs(os.Args[0])
 	loginShell := os.Getenv("SHELL")
 	plistFileContent := fmt.Sprintf(`<?xml version="1.0" encoding="UTF-8"?>
-									<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-									<plist version="1.0">
-									  <dict>
-									    <key>Label</key>
-										<string>osx-sync-env</string>
-										<key>ProgramArguments</key>
-										<array><string>%s</string><string>-c</string><string>-l</string><string>%s</string><string>sync</string></array>
-										<key>RunAtLoad</key>
-										<true/>
-									  </dict>
-									</plist>`, loginShell, programPath)
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+	<dict>
+	<key>Label</key>
+	<string>osx-sync-env</string>
+	<key>ProgramArguments</key>
+	<array><string>%s</string><string>-c</string><string>-l</string><string>%s</string><string>sync</string></array>
+	<key>RunAtLoad</key>
+	<true/>
+	</dict>
+</plist>`, loginShell, programPath)
 
 	file.WriteString(plistFileContent)
 	return nil
@@ -142,16 +142,16 @@ func main() {
 		Use:   "osx-sync-env", // os.Args[0]
 		Short: "osx-sync-env is and easy to use environment variable manager",
 		Long: `An easy to use environment variable manager. It loads the environment
-		        variables exported in the user shell into the osx GUI app context
-				using launchctl. Built with love by pastjean.`,
+variables exported in the user shell into the osx GUI app context
+using launchctl. Built with love by pastjean.`,
 	}
 
 	var installCmd = &cobra.Command{
 		Use:   "install",
 		Short: "Installs the sync on user login",
 		Long: `It creates a launch command that is run on user's log. That command
-		       launches osx-sync-env with the "sync" command (sets up the GUI app's context
-			   environment variables).`,
+launches osx-sync-env with the "sync" command (sets up the GUI app's context
+environment variables).`,
 		Run: func(cmd *cobra.Command, args []string) {
 
 			if err := install(); err != nil {
@@ -167,7 +167,7 @@ func main() {
 		Use:   "uninstall",
 		Short: "Removes the sync from the user's login",
 		Long: `It removes the login command from the user's login. Environment variables are
-		       still exported and a logout+login is necessary to remove them.`,
+still exported and a logout+login is necessary to remove them.`,
 		Run: func(cmd *cobra.Command, args []string) {
 
 			if err := uninstall(); err != nil {
@@ -182,7 +182,8 @@ func main() {
 	var upgradeCmd = &cobra.Command{
 		Use:   "upgrade",
 		Short: "Upgrades the plist file to the most recent version.",
-		Long:  `long upgrade help`,
+		Long: `Replace the plist file with a newer one. 
+Used only in case the software changes the plist format`,
 		Run: func(cmd *cobra.Command, args []string) {
 			upgrade()
 		},
@@ -192,7 +193,7 @@ func main() {
 		Use:   "sync",
 		Short: "Exports the env. vars. of the current shell into the GUI context",
 		Long: `This command uses "launchctl setenv" to synchronize environment variables 
-		        set in the current shell into the OSX GUI application context.`,
+set in the current shell into the OSX GUI application context.`,
 		Run: func(cmd *cobra.Command, args []string) {
 			sync()
 		},
