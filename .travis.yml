@@ -1,18 +1,16 @@
 language: go
 sudo: false
 go:
-- 1.6.3
 - tip
-
-matrix:
-  allow_failures:
-  - go: tip
 
 env:
 
 script:
 - go test -v ./...
 - GOOS=darwin GOARCH=amd64 go build
+
+before_deploy:
+- tar -czvf osx-sync-env.tar.gz osx-sync-env
 
 deploy:
   provider: releases
